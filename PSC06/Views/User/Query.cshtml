@@ -1,0 +1,76 @@
+﻿@model List<PSC06.Models.ViewModels.QueryViewModels>
+@{
+    ViewBag.Title = "Query";
+    Layout = "~/Views/Shared/_LayoutApp.cshtml";
+
+}
+
+<h2>Consulta Usuario</h2>
+
+<div class="row">
+    <br />
+    <div class="col-md-12">
+        <input type="button" value="Nuevo" class="btn btn-primary btn-lg" onclick="document.location.href = '@Url.Content("~/User/Add")'" />
+
+        <input type="button" value="Volver" class="btn btn-primary btn-lg" onclick="document.location.href ='@Url.Content("~/")'" />
+
+    </div>
+    <br />
+    <br />
+
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th style="background-color: #0094ff; color: white">ID</th>
+                <th style="background-color: #0094ff; color: white">Nombre</th>
+                <th style="background-color: #0094ff; color: white">Usuario</th>
+                <th style="background-color: #0094ff; color: white">Email</th>
+                <th style="background-color: #0094ff; color: white">Password</th>
+                <th style="background-color: #0094ff; color: white">Edad</th>
+                <th style="background-color: #0094ff; color: white">idEstatus</th>
+            </tr>
+            @foreach (var objs in Model)
+            {
+                <tr>
+                    <td>@objs.Id</td>
+                    <td>@objs.Nombre</td>
+                    <td>@objs.Usuario</td>
+                    <td>@objs.Email</td>
+                    <td>@objs.Password</td>
+                    <td>@objs.Edad</td>
+                    <td>@objs.idEstatus</td>
+
+                    <td>
+                        <input type="button" value="Eliminar" class="btn btn-danger btn-lg" onclick="jsDelete(@objs.Id);" />
+
+                        <input type="button" value="Actualizar" class="btn btn-default btn-lg" onclick="jsEdit(@objs.Id)" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function jsDelete(ID) {
+        if (confirm("Estas seguro de eliminar ?")) {
+            URL = "@Url.Content("~/User/Delete")" + "/" + ID;
+            $.post(URL, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/User/Query")"
+                } else {
+                    alert(" Registro no eliminado.")
+                }
+            })
+        };
+    }
+   function jsEdit(ID) {
+    if (confirm("¿Quieres actualizar?")) {
+        var URL = "@Url.Content("~/User/Edit")" + "/" + ID;
+        document.location.href = URL; // Redirección a la vista de edición
+    }
+    
+
+}
+
+</script>

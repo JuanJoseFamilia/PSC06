@@ -1,0 +1,48 @@
+﻿@model PSC06.Models.ViewModels.AddUserViewModels
+@{
+    ViewBag.Title = "Agregar";
+    Layout = "~/Views/Shared/_LayoutApp.cshtml";
+}
+
+<h2>Nuevo</h2>
+
+<div class="col-md-12">
+    <br />
+    <br />
+
+    @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "" }))
+    {
+        @Html.LabelFor(d => d.Nombre)
+        @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control " })
+        @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+        <br />
+
+        @Html.LabelFor(d => d.Usuario)
+        @Html.TextBoxFor(d => d.Usuario, new { @class = "form-control " })
+        @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(d => d.Email)
+        @Html.TextBoxFor(d => d.Email, new { @class = "form-control " })
+        @Html.ValidationMessage("Email", new { @class = "text-danger" })
+        <br />
+
+        @Html.LabelFor(d => d.Password)
+        @Html.TextBoxFor(d => d.Password, new { @class = "form-control " })
+        @Html.ValidationMessage("Password", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(d => d.ConfirmaPassword)
+        @Html.TextBoxFor(d => d.ConfirmaPassword, new { @class = "form-control " })
+        @Html.ValidationMessage("Confirmapassword", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(d => d.Edad)
+        @Html.TextBoxFor(d => d.Edad, new { @class = "form-control " })
+        @Html.ValidationMessage("Edad", new { @class = "text-danger" })
+        <br />
+
+        <div style="text-align: left">
+            <input type="submit" class="btn btn-success btn-lg" value="Guardar" />
+            <input type="button" class="btn btn-info btn-lg" value="volver" onclick="document.location.href= '@Url.Content("~/User/Query")'" />
+        </div>
+    }
+
+</div>

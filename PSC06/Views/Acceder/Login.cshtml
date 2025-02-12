@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutApp.cshtml";
+}
+
+<div class="row">
+    <form id="frmAcceder">
+        <div class="col-lg-6, col-lg-offset-0">
+            <br />
+            <br />
+            <div>
+                <label for="usuario">Usuario</label>
+                <input type="text" name="usuario" class="form-control" autofocus placeholder="Example@gmail.com" />
+            </div>
+            <br />
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" />
+            </div>
+            <br />
+            <input type="submit" class="btn btn-success btn-lg" value="Entrar" />
+        </div>
+    </form>
+</div>
+
+@section scripts
+{   
+    <script>
+        $(document).ready(function ()
+        {
+            $("#frmAcceder").submit(function (e) {
+                e.preventDefault();
+                URL = "@Url.Content("~/Acceder/Enter")";
+                parametros = $(this).serialize();
+
+                $.post(URL, parametros, function (data) {
+                    if (data == "1") {
+                        document.location.href = "@Url.Content("~/")";
+                    }
+                    else
+                    {
+                        alert(data);
+                    }
+                })
+            })
+        })
+    </script>       
+}
