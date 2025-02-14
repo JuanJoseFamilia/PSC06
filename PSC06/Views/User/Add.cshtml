@@ -4,45 +4,57 @@
     Layout = "~/Views/Shared/_LayoutApp.cshtml";
 }
 
-<h2>Nuevo</h2>
 
-<div class="col-md-12">
-    <br />
-    <br />
+    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100" style="background: white">
+        <div class="card shadow-lg p-5" style="width: 100%; max-width: 700px;">
+            <h2 class="text-center mb-5" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 2.5rem;">Agregar Nuevo Usuario</h2>
 
-    @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "" }))
-    {
-        @Html.LabelFor(d => d.Nombre)
-        @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control " })
-        @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
-        <br />
 
-        @Html.LabelFor(d => d.Usuario)
-        @Html.TextBoxFor(d => d.Usuario, new { @class = "form-control " })
-        @Html.ValidationMessage("Usuario", new { @class = "text-danger" })
-        <br />
-        @Html.LabelFor(d => d.Email)
-        @Html.TextBoxFor(d => d.Email, new { @class = "form-control " })
-        @Html.ValidationMessage("Email", new { @class = "text-danger" })
-        <br />
+            @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "needs-validation" }))
+            {
+                <div class="d-flex justify-content-start mb-4">
+                    <button type="button" class="btn btn-light btn-lg" onclick="window.location.href='@Url.Content("~/User/Query")'"><img src="~/Content/img/back.png" alt="atras" width="40"></button>
 
-        @Html.LabelFor(d => d.Password)
-        @Html.TextBoxFor(d => d.Password, new { @class = "form-control " })
-        @Html.ValidationMessage("Password", new { @class = "text-danger" })
-        <br />
-        @Html.LabelFor(d => d.ConfirmaPassword)
-        @Html.TextBoxFor(d => d.ConfirmaPassword, new { @class = "form-control " })
-        @Html.ValidationMessage("Confirmapassword", new { @class = "text-danger" })
-        <br />
-        @Html.LabelFor(d => d.Edad)
-        @Html.TextBoxFor(d => d.Edad, new { @class = "form-control " })
-        @Html.ValidationMessage("Edad", new { @class = "text-danger" })
-        <br />
+                </div>
 
-        <div style="text-align: left">
-            <input type="submit" class="btn btn-success btn-lg" value="Guardar" />
-            <input type="button" class="btn btn-info btn-lg" value="volver" onclick="document.location.href= '@Url.Content("~/User/Query")'" />
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-striped table-hover align-middle">
+                        <tbody>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.Nombre, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" }) @Html.ValidationMessage("Nombre", null, new { @class = "text-danger" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.Usuario, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.TextBoxFor(d => d.Usuario, new { @class = "form-control" }) @Html.ValidationMessage("Usuario", null, new { @class = "text-danger" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.Email, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.TextBoxFor(d => d.Email, new { @class = "form-control" }) @Html.ValidationMessage("Email", null, new { @class = "text-danger" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.Password, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.PasswordFor(d => d.Password, new { @class = "form-control" }) @Html.ValidationMessage("Password", null, new { @class = "text-danger" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.ConfirmaPassword, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.PasswordFor(d => d.ConfirmaPassword, new { @class = "form-control" }) @Html.ValidationMessage("Confirmapassword", null, new { @class = "text-danger" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(d => d.Edad, new { @class = "form-label fw-bold" })</td>
+                                <td>@Html.TextBoxFor(d => d.Edad, new { @class = "form-control" }) @Html.ValidationMessage("Edad", null, new { @class = "text-danger" })</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <input type="submit" class="btn btn-success btn-lg" value="Guardar" />
+
+                </div>
+            }
         </div>
-    }
+    </div>
 
-</div>
+
+

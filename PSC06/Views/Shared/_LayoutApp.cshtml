@@ -6,19 +6,29 @@
     <title>@ViewBag.Title - Programacion 3 SC 06</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
- 
-    <div class="container body-content">
+    
+    <div class="container-fluid body-content m-0 p-0">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Programacion 3 SC 06</p>
-        </footer>
+
+        @if (ViewBag.OcultarFooter == null || ViewBag.OcultarFooter == false)
+        {
+            <hr />
+            <footer class="bg-dark text-light text-center py-4 mt-5">
+                <div class="container">
+                    <p class="mb-2">&copy; @DateTime.Now.Year - Programación 3 SC 06</p>
+                    
+                </div>
+            </footer>
+
+        }
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

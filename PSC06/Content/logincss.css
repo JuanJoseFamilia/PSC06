@@ -1,0 +1,22 @@
+﻿body {
+    background-image: url("img/fondologin.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+
+}
+.card {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo con opacidad */
+
+}
+#Titulo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+.form-control {
+    width: 100% !important;
+}
+.form-control, .btn-lg {
+    display: block;
+    width: 100% !important;
+}

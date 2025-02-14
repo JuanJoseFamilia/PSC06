@@ -4,73 +4,131 @@
     Layout = "~/Views/Shared/_LayoutApp.cshtml";
 
 }
+    <div class="container-fluid min-vh-100 d-flex flex-column  align-items-center" style="background-color: #f8f9fa;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 2.5rem;">Consulta Usuario</h2>
+        <div class="mb-4 d-flex justify-content-start w-75 gap-2">
+            <button class="btn btn-light btn-lg" onclick="document.location.href = '@Url.Content("~/")'">
+                <img src="~/Content/img/back.png" alt="atras" width="40">
+            </button>
+            <button class="btn btn-light btn-lg" onclick="document.location.href = '@Url.Content("~/User/Add")'">
+                <img src="~/Content/img/new.png" alt="Nuevo" width="40">
+            </button>
 
-<h2>Consulta Usuario</h2>
+        </div>
 
-<div class="row">
-    <br />
-    <div class="col-md-12">
-        <input type="button" value="Nuevo" class="btn btn-primary btn-lg" onclick="document.location.href = '@Url.Content("~/User/Add")'" />
-
-        <input type="button" value="Volver" class="btn btn-primary btn-lg" onclick="document.location.href ='@Url.Content("~/")'" />
-
+        <div class="col-lg-10">
+            <div class="table-responsive shadow-lg rounded">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Estatus</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        @foreach (var objs in Model)
+                        {
+                            <tr class="border-bottom">
+                                <td>@objs.Id</td>
+                                <td>@objs.Nombre</td>
+                                <td>@objs.Usuario</td>
+                                <td>@objs.Email</td>
+                                <td>@objs.Password</td>
+                                <td>@objs.Edad</td>
+                                <td>@objs.idEstatus</td>
+                                <td class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-outline-danger btn-sm px-3" onclick="jsDelete(@objs.Id);"><i class="bi bi-trash"></i> Eliminar</button>
+                                    <button class="btn btn-outline-warning btn-sm px-3" onclick="jsEdit(@objs.Id);"><i class="bi bi-pencil"></i> Actualizar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <br />
-    <br />
 
-    <div class="col-lg-12">
-        <table class="table table-bordered">
-            <tr>
-                <th style="background-color: #0094ff; color: white">ID</th>
-                <th style="background-color: #0094ff; color: white">Nombre</th>
-                <th style="background-color: #0094ff; color: white">Usuario</th>
-                <th style="background-color: #0094ff; color: white">Email</th>
-                <th style="background-color: #0094ff; color: white">Password</th>
-                <th style="background-color: #0094ff; color: white">Edad</th>
-                <th style="background-color: #0094ff; color: white">idEstatus</th>
-            </tr>
-            @foreach (var objs in Model)
-            {
-                <tr>
-                    <td>@objs.Id</td>
-                    <td>@objs.Nombre</td>
-                    <td>@objs.Usuario</td>
-                    <td>@objs.Email</td>
-                    <td>@objs.Password</td>
-                    <td>@objs.Edad</td>
-                    <td>@objs.idEstatus</td>
 
-                    <td>
-                        <input type="button" value="Eliminar" class="btn btn-danger btn-lg" onclick="jsDelete(@objs.Id);" />
-
-                        <input type="button" value="Actualizar" class="btn btn-default btn-lg" onclick="jsEdit(@objs.Id)" />
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
-
-<script>
+    <script>
     function jsDelete(ID) {
-        if (confirm("Estas seguro de eliminar ?")) {
+    // Usamos SweetAlert2 para la confirmación
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esta acción!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Aquí hacemos el llamado a la URL de eliminación
             URL = "@Url.Content("~/User/Delete")" + "/" + ID;
+
             $.post(URL, function (data) {
-                if (data == "1") {
-                    document.location.href = "@Url.Content("~/User/Query")"
-                } else {
-                    alert(" Registro no eliminado.")
+                if (data == "1")
+                {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro eliminado!',
+                        text: 'El registro ha sido eliminado exitosamente.',
+                        timer: 1500, // El mensaje se muestra durante 1.5 segundos
+                        showConfirmButton: false // No mostrar el botón de confirmación
+                    }).then(() => {
+                        // Después de que el mensaje desaparezca, redirigimos a la lista de usuarios
+                        document.location.href = "@Url.Content("~/User/Query")";
+                    });
                 }
-            })
-        };
-    }
-   function jsEdit(ID) {
-    if (confirm("¿Quieres actualizar?")) {
-        var URL = "@Url.Content("~/User/Edit")" + "/" + ID;
-        document.location.href = URL; // Redirección a la vista de edición
-    }
-    
+                else
+                {
+                    Swal.fire(
+                        'Error',
+                        'El registro no fue eliminado.',
+                        'error'
+                    );
+                }
+
+
+            });
+
+        }
+
+    });
+}
+
+    function jsEdit(ID) {
+        // Usamos SweetAlert2 para la confirmación
+        swal.fire({
+            ico: "warning",
+            title: "Quieres Editar?",
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Si, editar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var URL = "@Url.Content("~/User/Edit")" + "/" + ID;
+                document.location.href = URL; // Redirección a la vista de edición
+            }
+
+        })
+
 
 }
 
-</script>
+    </script>
+

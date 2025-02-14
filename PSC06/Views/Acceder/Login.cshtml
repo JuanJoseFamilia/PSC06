@@ -3,30 +3,41 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LayoutApp.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="~/Content/logincss.css" />
+</head>
+<body class="container-fluid">
 
-<div class="row">
-    <form id="frmAcceder">
-        <div class="col-lg-6, col-lg-offset-0">
-            <br />
-            <br />
-            <div>
-                <label for="usuario">Usuario</label>
-                <input type="text" name="usuario" class="form-control" autofocus placeholder="Example@gmail.com" />
-            </div>
-            <br />
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" />
-            </div>
-            <br />
-            <input type="submit" class="btn btn-success btn-lg" value="Entrar" />
+    <div class="container-fluid d-flex justify-content-center align-items-center vh-100  ">
+        <div class="card shadow-lg p-5  col-12 col-sm-8 col-md-6 col-lg-3 ">
+            <h2 id="Titulo" class="text-center mb-5 mt-5 text-light" >Inicio de Sesión</h2>
+            <form id="frmAcceder" >
+                <div class="mb-5" >
+                    <label for="usuario" class="form-label   col-form-label-lg text-light">Usuario</label>
+                    <input type="text" name="usuario" class="form-control  form-control-lg" placeholder="example@gmail.com" autofocus required>
+                </div>
+                <br />
+                <div class="mb-5">
+                    <label for="password" class="form-label col-form-label-lg text-light">Password</label>
+                    <input type="password" name="password" class="form-control form-control-lg" required>
+                </div>
+             
+                <br />
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+    </div>
 
-@section scripts
-{   
-    <script>
+    @section scripts
+{
+        <script>
         $(document).ready(function ()
         {
             $("#frmAcceder").submit(function (e) {
@@ -35,15 +46,28 @@
                 parametros = $(this).serialize();
 
                 $.post(URL, parametros, function (data) {
-                    if (data == "1") {
+                if (data == "1") {
+                    Swal.fire({
+                        icon: "success",
+                        title: "¡Bienvenido!",
+                        text: "Inicio de sesión exitoso",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
                         document.location.href = "@Url.Content("~/")";
-                    }
-                    else
-                    {
-                        alert(data);
-                    }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error, revisa los datos.",
+                        text: data
+                    });
+                }
                 })
             })
         })
-    </script>       
-}
+        </script>
+    }
+
+</body>
+</html>

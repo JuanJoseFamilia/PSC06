@@ -38,14 +38,15 @@ namespace PSC06.Controllers
 
         public ActionResult Delete(int Id)
         {
+            //abrimos la base de datos 
             using (var db = new DBMVCEntities())
             {
-                var oUser = db.USERS.Find(Id);
+                var oUser = db.USERS.Find(Id);//Aqui se busca mediante la id el registro a eliminar
                 oUser.idEstatus = 3;
                 db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
-            return Content( "1" );
+            return Content( "1" );//retornamos el contenido "1" 
         }
         [HttpGet]
         public ActionResult Add()
@@ -60,10 +61,11 @@ namespace PSC06.Controllers
             {
                 return View(model);
             }
+            //abrimos la base de datos
             using (var db = new DBMVCEntities())
             {
                 USERS oUser = new USERS();
-
+                // se asignan los valores que tomamos del modelo a oUSer
                 oUser.idEstatus = 1;
                 oUser.Nombre = model.Nombre;
                 oUser.Usuario = model.Usuario;
@@ -71,21 +73,21 @@ namespace PSC06.Controllers
                 oUser.Password = model.Password;
                 oUser.Edad = model.Edad;
 
-                db.USERS.Add(oUser);
-                db.SaveChanges();
+                db.USERS.Add(oUser);//le dicimos que agrege esos valores a la tabla
+                db.SaveChanges();// guardamos cambios
             }
-            return Redirect(Url.Content("~/User/Query"));
+            return Redirect(Url.Content("~/User/Query"));//redirigimos a la tabla principal
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
             EditUserViewModels model = new EditUserViewModels();
-
-            using(var db = new DBMVCEntities())
+            //abrimos la base de datos
+            using (var db = new DBMVCEntities())
             {
                 var oUser = db.USERS.Find(id);
-
+                // se asignan los valores que tomamos del oUser al modelo
                 model.Id = id;
                 model.Nombre = oUser.Nombre;
                 model.Usuario= oUser.Usuario;
@@ -93,7 +95,7 @@ namespace PSC06.Controllers
                 model.Password = oUser.Password;  
                 model.Edad = oUser.Edad;
                 
-                return View(model);
+                return View(model);//devolvemos la vista con el modelo
 
             }
         }
@@ -101,28 +103,30 @@ namespace PSC06.Controllers
         [HttpPost]
         public ActionResult Edit(EditUserViewModels model)
         {
+            //se valiad si el estado del modelo es valiodo y se retorna
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+            //abrimos la base de datos
             using (var db = new DBMVCEntities())
             {
                 var oUser = db.USERS.Find(model.Id);
-
+                // se asignan los valores que tomamos del modelo al oUser
                 oUser.Nombre= model.Nombre;
                 oUser.Usuario = model.Usuario;
                 oUser.Email = model.Email;
                 oUser.Edad = model.Edad;
-
+                //validamos si la password es nula o si esta vacia
                 if (model.Password != null || model.Password != "")
                 {
                     oUser.Password = model.Password;
                 }
-
+                //usamos modified para modificar los campos de nuestro registro
                 db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                db.SaveChanges();//guardamos cambios
             }
-            return Redirect(Url.Content("~/User/Query"));
+            return Redirect(Url.Content("~/User/Query"));//redirigimos a la tabla principal
         }
         
 

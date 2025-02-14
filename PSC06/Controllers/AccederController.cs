@@ -12,6 +12,7 @@ namespace PSC06.Controllers
         // GET: Acceder
         public ActionResult Login()
         {
+            ViewBag.OcultarFooter = true;
             return View();
         }
 
@@ -34,6 +35,7 @@ namespace PSC06.Controllers
                 }
                 else
                 {
+
                     //sms si no existe Usuario
                     return Content("Usuario no registrado");
                 }
